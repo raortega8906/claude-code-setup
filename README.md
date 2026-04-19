@@ -54,13 +54,13 @@ claude
 ## 📖 Índice de esta guía
 
 1. [CLAUDE.md — El archivo más importante](guides/claude-md-guide.md)
-2. [Prompts efectivos por tipo de tarea](./docs/prompts-guide.md)
-3. [Skills por tecnología](./docs/skills-guide.md)
-4. [Comandos personalizados](./docs/commands-guide.md)
-5. [Testing y calidad](./docs/testing-guide.md)
-6. [Seguridad](./docs/security-guide.md)
-7. [Despliegue](./docs/deployment-guide.md)
-8. [Flujo de trabajo diario](./docs/workflow-guide.md)
+2. [Prompts efectivos por tipo de tarea](guides/prompts-guide.md)
+3. [Skills por tecnología](guides/skills-guide.md)
+4. [Comandos personalizados](guides/commands-guide.md)
+5. [Testing y calidad](guides/testing-guide.md)
+6. [Seguridad](guides/security-guide.md)
+7. [Despliegue](guides/deployment-guide.md)
+8. [Flujo de trabajo diario](guides/workflow-guide.md)
 
 ---
 
