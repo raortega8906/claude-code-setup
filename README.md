@@ -53,7 +53,7 @@ claude
 
 ## 📖 Índice de esta guía
 
-1. [CLAUDE.md — El archivo más importante](./docs/claude-md-guide.md)
+1. [CLAUDE.md — El archivo más importante](guides/claude-md-guide.md)
 2. [Prompts efectivos por tipo de tarea](./docs/prompts-guide.md)
 3. [Skills por tecnología](./docs/skills-guide.md)
 4. [Comandos personalizados](./docs/commands-guide.md)
