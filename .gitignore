@@ -1,0 +1,108 @@
+# ──────────────────────────────────────────────────────
+# .gitignore completo para stack Laravel + WordPress + Astro/Next.js
+# ──────────────────────────────────────────────────────
+
+# ── Secretos y entorno (NUNCA en git) ─────────────────
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+
+# ── Laravel ───────────────────────────────────────────
+/vendor/
+/node_modules/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/app/
+/storage/logs/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/testing/
+/storage/framework/views/
+/bootstrap/cache/*.php
+Homestead.json
+Homestead.yaml
+auth.json
+.phpunit.result.cache
+.phpunit.cache/
+
+# ── WordPress ─────────────────────────────────────────
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+# Mantener en git: plugins propios, tema hijo
+# Ignorar: WordPress core (gestionar con composer o manual)
+wordpress/
+# Si usas Bedrock/Roots:
+web/wp/
+
+# ── Astro ─────────────────────────────────────────────
+dist/
+.astro/
+
+# ── Next.js ───────────────────────────────────────────
+.next/
+out/
+
+# ── Node.js general ───────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+
+# ── Build outputs ─────────────────────────────────────
+/public/build/
+/public/css/
+/public/js/
+*.min.js
+*.min.css
+
+# ── Sistema operativo ─────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDEs y editores ───────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# ── Testing y cobertura ───────────────────────────────
+/coverage/
+.nyc_output/
+.phpunit.result.cache
+
+# ── Logs ──────────────────────────────────────────────
+*.log
+logs/
+error_log
+
+# ── Backups ───────────────────────────────────────────
+*.sql
+*.sql.gz
+*.tar.gz
+*.zip
+backup-*
+
+# ── Claude Code (memoria local, no compartida) ────────
+.claude/settings.local.json
