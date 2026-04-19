@@ -1,0 +1,107 @@
+name: CI — Tests y Calidad de Código
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─── Laravel Tests ────────────────────────────────────────────────
+  laravel-tests:
+    name: Laravel Tests
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.modified, 'app/') || contains(github.event.head_commit.modified, 'tests/')
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: testing
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, ctype, json, bcmath, pdo, pdo_mysql
+          coverage: xdebug
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Setup environment
+        run: |
+          cp .env.example .env.testing
+          php artisan key:generate --env=testing
+
+      - name: Static analysis (PHPStan)
+        run: ./vendor/bin/phpstan analyse --no-progress
+
+      - name: Code style (Pint)
+        run: ./vendor/bin/pint --test
+
+      - name: Run tests
+        run: php artisan test --parallel --env=testing
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: testing
+          DB_USERNAME: root
+          DB_PASSWORD: root
+
+      - name: Security audit
+        run: composer audit
+
+  # ─── Frontend Tests ────────────────────────────────────────────────
+  frontend-tests:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npm run type-check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test:run
+
+      - name: Build
+        run: npm run build
+
+      - name: Security audit
+        run: npm audit --audit-level=high
+
+  # ─── Check secrets (prevenir leaks) ──────────────────────────────
+  secret-scan:
+    name: Scan for secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Historial completo para escanear todos los commits
+
+      - name: Detect secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
